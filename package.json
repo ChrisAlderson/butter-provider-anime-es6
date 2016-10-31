@@ -1,0 +1,23 @@
+{
+  "name": "butter-provider-anime-es6",
+  "version": "1.0.0",
+  "description": "A Butter provider for anime show, completable with the popcorn-api.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/basic.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "butter-provider": "^0.4.0",
+    "butter-sanitize": "^0.1.1",
+    "request": "^2.76.0"
+  },
+  "devDependencies": {
+    "debug": "^2.2.0",
+    "tape": "^4.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChrisAlderson/butter-provider-anime-es6.git"
+  }
+}
