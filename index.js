@@ -1,7 +1,6 @@
 'use strict';
 
 const Generic = require('butter-provider');
-const querystring = require('querystring');
 const request = require('request');
 const sanitize = require('butter-sanitize');
 
@@ -86,17 +85,18 @@ class AnimeApi extends Generic {
     return options;
   }
 
-  _get(index, url) {
+  _get(index, url, qs) {
     const req = this._processCloudFlareHack({
       url,
-      json: true
+      json: true,
+      qs
     }, this.apiURL[index]);
-    console.info('Request to AnimeApi', req.url);
+    console.info(`Request to AnimeApi: ${req.url}`);
 
     return new Promise((resolve, reject) => {
-      request(req, (err, res, data) => {
+      return request.get(req, (err, res, data) => {
         if (err || res.statusCode >= 400) {
-          console.warn('AnimeApi endpoint \'%s\' failed.', this.apiURL[index]);
+          console.warn(`AnimeApi endpoint '${this.apiURL[index]}' failed.`);
           if (index + 1 >= this.apiURL.length) {
             return reject(err || 'Status Code is above 400');
           } else {
@@ -104,7 +104,7 @@ class AnimeApi extends Generic {
           }
         } else if (!data || data.error) {
           err = data ? data.status_message : 'No data returned';
-          console.error('API error:', err);
+          console.error(`AnimeApi error: ${err}`);
           return reject(err);
         } else {
           return resolve(data);
@@ -129,13 +129,13 @@ class AnimeApi extends Generic {
     if (filters.sorter && filters.sorter !== 'popularity') params.sort = filters.sorter;
 
     const index = 0;
-    const url = this.apiURL[index] + 'animes/' + filters.page + '?' + querystring.stringify(params).replace(/%25%20/g, '%20');
-    return this._get(index, url).then(this._formatForPopcornFetch);
+    const url = `${this.apiURL[index]}animes/${filters.page}`;
+    return this._get(index, url, params).then(this._formatForPopcornFetch);
   }
 
   detail(torrent_id, old_data, debug) {
     const index = 0;
-    const url = this.apiURL[index] + 'anime/' + torrent_id;
+    const url = `${this.apiURL[index]}anime/${torrent_id}`;
     return this._get(index, url).then(this._formatForPopcornDetail);
   }
 
