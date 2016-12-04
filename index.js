@@ -75,7 +75,7 @@ class AnimeApi extends Generic {
     const match = url.match(/^cloudflare\+(.*):\/\/(.*)/);
     if (match) {
       options = Object.assign(options, {
-        uri: match[1] + '://cloudflare.com/',
+        uri: `${match[1]}://cloudflare.com/`,
         headers: {
           'Host': match[2],
           'User-Agent': 'Mozilla/5.0 (Linux) AppleWebkit/534.30 (KHTML, like Gecko) PT/3.8.0'
