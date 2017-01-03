@@ -2,13 +2,16 @@
   "name": "butter-provider-anime-es6",
   "version": "1.0.0",
   "description": "A Butter provider for anime show, completable with the popcorn-api.",
-  "main": "index.js",
+  "butter": {
+    "timeout": 20000,
+    "testArgs": "AnimeApi?apiURL=[\"http://localhost:5000/\",\"https://anime.api-fetch.website/\",\"cloudflare+https://anime.api-fetch.website/\"]"
+  },
   "scripts": {
-    "test": "node tests/basic.js"
+    "test": "tape ./node_modules/butter-provider/tests/*"
   },
   "license": "MIT",
   "dependencies": {
-    "butter-provider": "^0.5.1",
+    "butter-provider": "git+https://github.com/butterproviders/butter-provider",
     "butter-sanitize": "^0.1.1",
     "request": "^2.79.0"
   },
